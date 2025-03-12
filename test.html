@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>3D Free Quote Form</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            background: linear-gradient(135deg, #6e8efb, #a777e3);
+            margin: 0;
+            perspective: 1200px;
+            overflow: hidden;
+        }
+        .container {
+            background: white;
+            padding: 25px;
+            border-radius: 12px;
+            box-shadow: 10px 10px 30px rgba(0, 0, 0, 0.3);
+            transform-style: preserve-3d;
+            animation: fall 1.5s ease-out forwards;
+            transition: transform 0.5s ease-in-out, box-shadow 0.3s ease-in-out;
+        }
+        @keyframes fall {
+            0% {
+                transform: translateY(-100vh) rotateX(45deg) rotateY(30deg) scale(1.2);
+                opacity: 0;
+            }
+            100% {
+                transform: translateY(0) rotateX(0deg) rotateY(0deg) scale(1);
+                opacity: 1;
+            }
+        }
+        .container:hover {
+            transform: rotateX(8deg) rotateY(8deg) scale(1.05);
+            box-shadow: 15px 15px 35px rgba(0, 0, 0, 0.4);
+        }
+        h2 {
+            text-align: center;
+            color: #333;
+            margin-bottom: 15px;
+        }
+        input, textarea {
+            width: 100%;
+            padding: 12px;
+            margin: 12px 0;
+            border: 1px solid #ccc;
+            border-radius: 8px;
+            font-size: 16px;
+            transition: all 0.3s ease;
+        }
+        input:focus, textarea:focus {
+            outline: none;
+            border-color: #6e8efb;
+            box-shadow: 0 0 10px rgba(110, 142, 251, 0.6);
+        }
+        button {
+            width: 100%;
+            padding: 12px;
+            background: #6e8efb;
+            color: white;
+            border: none;
+            border-radius: 8px;
+            font-size: 16px;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+        button:hover {
+            background: #5a7be0;
+            transform: scale(1.1);
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h2>Get a Free Quote</h2>
+        <form id="quoteForm">
+            <input type="text" id="name" placeholder="Your Name" required>
+            <input type="email" id="email" placeholder="Your Email" required>
+            <textarea id="message" placeholder="Your Message" required></textarea>
+            <button type="submit">Submit</button>
+        </form>
+    </div>
+    <script>
+        document.getElementById("quoteForm").addEventListener("submit", function(event) {
+            event.preventDefault();
+            const name = document.getElementById("name").value.trim();
+            const email = document.getElementById("email").value.trim();
+            const message = document.getElementById("message").value.trim();
+            
+            if (name === "" || email === "" || message === "") {
+                alert("Please fill out all fields before submitting.");
+                return;
+            }
+
+            alert(`Thank you, ${name}! Your quote request has been received.`);
+            document.getElementById("quoteForm").reset();
+        });
+        
+        // Add slight movement effect on mouse move
+        const container = document.querySelector('.container');
+        document.addEventListener('mousemove', (event) => {
+            let xAxis = (window.innerWidth / 2 - event.pageX) / 25;
+            let yAxis = (window.innerHeight / 2 - event.pageY) / 25;
+            container.style.transform = `rotateX(${yAxis}deg) rotateY(${xAxis}deg)`;
+        });
+    </script>
+</body>
+</html>
